@@ -1,6 +1,13 @@
 # Building Web Applications with AWS Amplify
 
-In this tutorial we'll look at how to build web applications with React & AWS Amplify.
+In this workshop we'll learn how to build cloud-enabled web applications with React & AWS Amplify.
+
+### Topics we'll be covering:
+
+- Authentication
+- Analytics
+- GraphQL with AWS AppSync
+- Lambda Functions
 
 ## Getting Started
 

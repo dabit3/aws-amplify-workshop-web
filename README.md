@@ -4,6 +4,42 @@ In this tutorial we'll look at how to build web applications with React & AWS Am
 
 ## Getting Started
 
+To get started, we first need to create a new React project & change into the new directory using the [Create React App CLI](https://github.com/facebook/create-react-app).
+
+If you already have this installed, skip to the next step. If not, either install the CLI & create a new app:
+
+```bash
+npm install -g create-react-app
+create-react-app my-amplify-app
+```
+
+Or use npx (npm 5.2 & later) to create a new app:
+
+```bash
+npx create-react-app my-amplify-app
+```
+
+Now change into the new app directory & install the AWS Amplify & AWS Amplify React libraries:
+
+```bash
+cd my-amplify-app
+npm install --save aws-amplify aws-amplify-react
+# or
+yarn add aws-amplify aws-amplify-react
+```
+
+Next, we'll install the AWS Amplify CLI:
+
+```bash
+npm i -g amplify-cli
+```
+
+Now we'll create a new amplify project:
+
+```bash
+amplify init
+```
+
 ## Adding Authentication
 
 ## Adding Analytics

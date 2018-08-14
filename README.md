@@ -35,6 +35,8 @@ npm install --save aws-amplify aws-amplify-react
 yarn add aws-amplify aws-amplify-react
 ```
 
+## Initializing a new AWS Amplify Project
+
 Next, we'll install the AWS Amplify CLI:
 
 ```bash

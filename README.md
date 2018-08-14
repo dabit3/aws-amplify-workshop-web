@@ -47,6 +47,10 @@ Now we'll create a new amplify project:
 amplify init
 ```
 
+> Next, we'll walk through the `amplify init` setup, but if you'd like to see a video walkthrough of this setup, click [here](https://www.youtube.com/watch?v=xHDDkv0LjUY).
+
+
+
 ## Adding Authentication
 
 ## Adding Analytics

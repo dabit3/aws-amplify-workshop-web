@@ -49,11 +49,10 @@ amplify init
 
 > Next, we'll walk through the `amplify init` setup, but if you'd like to see a video walkthrough of this setup, click [here](https://www.youtube.com/watch?v=xHDDkv0LjUY).
 
-```sh
-? Please enter a name for the project amplifyapp
-? Choose your default editor: <YOUREDITOR>
-? Please choose the type of app that you're building javascript
-```
+__? Please enter a name for the project__ amplifyapp
+__? Choose your default editor:__ <YOUREDITOR>
+__? Please choose the type of app that you're building__ javascript
+
 
 ## Adding Authentication
 

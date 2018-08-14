@@ -69,16 +69,48 @@ amplify init
 ? Assign a profile name for this user: __N__   
 ? Do you want to setup project specific configuration __N__   
 
+Now, the AWS Amplify CLI has iniatilized a new project & you will see a couple of new files & folders: __amplify__ & __.amplifyrc__. These files hold your project configuration.
+
 
 
 ## Adding Authentication
 
+To add authentication, we can use the following command:
+
+```sh
+amplify add auth
+```
+
 ## Adding Analytics
 
-## Adding an API
+To add analytics, we can use the following command:
+
+```sh
+amplify add analytics
+```
+
+## Adding a REST API
+
+To add a REST API, we can use the following command:
+
+```sh
+amplify add api
+```
 
 ## Adding GraphQL
 
+To add a GraphQL API, we can use the following command:
+
+```sh
+amplify add api
+```
+
 ## Working with Storage
+
+To add storage, we can use the following command:
+
+```sh
+amplify add storage
+```
 
 

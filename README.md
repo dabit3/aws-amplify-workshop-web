@@ -52,6 +52,21 @@ amplify init
 ? Please enter a name for the project __amplifyapp__   
 ? Choose your default editor: __Visual Studio Code # or your default editor__   
 ? Please choose the type of app that you're building __javascript__   
+? What javascript framework are you using __react__   
+? Source Directory Path: __src__    \
+? Distribution Directory Path: __build__   
+? Build Command: __npm run-script build__   
+? Start Command: __npm run-script start__   
+? Setup new user __Y__
+> Next, sign in to your your AWS account, then return to the command line & click Enter   
+? Please specify the aws region: __us-east-1 #or eu-central-1__   
+? user name: __amplify-cli-user__   
+> In the AWS Console, click __Next: Permissions__, __Next: Review__, & __Create User__ to create the new IAM user. Then, return to the command line & press Enter.   
+? accessKeyId: __<YourAccessKeyId>__   
+? secretAccessKey: __<YourSecretAccessKey>__   
+? Assign a profile name for this user: __N__   
+? Do you want to setup project specific configuration __N__   
+
 
 
 ## Adding Authentication

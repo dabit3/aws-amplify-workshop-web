@@ -66,13 +66,12 @@ amplify init
 ? user name: __amplify-cli-user__   
 > In the AWS Console, click __Next: Permissions__, __Next: Review__, & __Create User__ to create the new IAM user. Then, return to the command line & press Enter.   
 
-? accessKeyId: __<YourAccessKeyId>__   
-? secretAccessKey: __<YourSecretAccessKey>__   
+? accessKeyId: __YOURIDHERE__   
+? secretAccessKey: __YOURSECRETACCESSKEYHERE__   
 ? Assign a profile name for this user: __N__   
 ? Do you want to setup project specific configuration __N__   
 
 Now, the AWS Amplify CLI has iniatilized a new project & you will see a couple of new files & folders: __amplify__ & __.amplifyrc__. These files hold your project configuration.
-
 
 
 ## Adding Authentication
@@ -83,12 +82,124 @@ To add authentication, we can use the following command:
 amplify add auth
 ```
 
+> When prompted for __Do you want to use default authentication and security configuration?__, choose __Yes__
+
+Now, we'll run the push command and the cloud resources will be created in our AWS account.
+
+```bash
+amplify push
+```
+
+#### Configuring the React applicaion
+
+Now, our resources are created & we can start using them!
+
+The first thing we need to do is to configure our React application to be aware of our new AWS Amplify project. We can do this by referencing the auto-generated `aws-exports.js` file that is now in our src folder.
+
+To configure the app, open __index.js__ and add the following code below the last import:
+
+```js
+import Amplify from 'aws-amplify'
+import config from './aws-exports'
+Amplify.configure(config)
+```
+
+Now, our app is ready to start using our AWS services.
+
+#### Using the withAuthenticator component
+
+To add authentication, we'll go into our App.js file file and first import the `withAuthenticator` HOC (Higher Order Component) from `aws-amplify-react`:
+
+```js
+import { withAuthenticator } from 'aws-amplify-react'
+```
+
+Next, we'll wrap our default export (the App component) with the `withAuthenticator` HOC:
+
+```js
+export default withAuthenticator(App)
+```
+
+Now, we can run the app and see that an Authentication flow has been added in front of our App component. This flow gives users the ability to sign up & sign in.
+
+#### Custom authentication strategies
+
+The `withAuthenticator` component is a really easy way to get up and running with authentication, but in a real-world application we probably want more control over how our form looks & functions.
+
+Let's look at how we might create our own authentication flow.
+
+To get started, we would probably want to create input fields that would hold user input data in the state. For instance when signing up a new user, we would probably need 4 user inputs to capture the user's username, email, password, & phone number.
+
+To do this, we could create some initial state for these values & create an event handler that we could attach to the form inputs:
+
+```js
+// initial state
+state = {
+  username: '', password: '', email: '', phone_number: ''
+}
+
+// event handler
+onChange = (event) => {
+  this.setState({ [event.target.name]: event.target.value })
+}
+
+// example of usage with input
+<input
+  name='username'
+  placeholder='username'
+  onChange={this.onChange}
+/>
+```
+
+We'd also need to have a method that signed up & signed in users. We can us the Auth class to do thi. The Auth class has over 30 methods including things like `signUp`, `signIn`, `confirmSignUp`, `confirmSignIn`, & `forgotPassword`. Thes functions return a promise so they need to be handled asynchronously.
+
+```js
+// import the Auth component
+import { Auth } from 'aws-amplify'
+
+// Class method to sign up a user
+signUp = async() => {
+  const { username, password, email, phone_number } = this.state
+  try {
+    await Auth.signUp({ username, password, attributes: { email, phone_number }})
+  } catch (err) {
+    console.log('error signing up user...', err)
+  }
+}
+```
+
+
 ## Adding Analytics
 
 To add analytics, we can use the following command:
 
 ```sh
 amplify add analytics
+```
+
+> Next, we'll be prompted for the following:
+
+? Provide your pinpoint resource name: __amplifyanalytics__   
+? Apps need authorization to send analytics events. Do you want to allow guest/unauthenticated users to send analytics events (recommended when getting started)? __Y__   
+? overwrite YOURFILEPATH-cloudformation-template.yml __Y__
+
+#### Recording events
+
+Now that the service has been created we can now begin recording events.
+
+To record analytics events, we need to import the `Analytics` class from Amplify & then call `Analytics.record`:
+
+```js
+import { Analytics } from 'aws-amplify'
+
+recordEvent = () => {
+  Analytics.record({
+    name: 'My test event',
+    attributes: {
+      username: 'naderdabit'
+    }
+  })
+}
 ```
 
 ## Adding a REST API
@@ -99,12 +210,92 @@ To add a REST API, we can use the following command:
 amplify add api
 ```
 
-## Adding GraphQL
+? Please select from one of the above mentioned services __REST__   
+? Please provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapi__   
+? Please provide a path, e.g. /items __/pets__   
+? Please select lambda source __Create a new Lambda function__   
+? Please provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapilambda__   
+? Please provide the Lambda function name: __amplifyrestapilambda__   
+? Please select the function template you want to use: __Serverless express function (Integration with Amazon API Gateway)__   
+? Do you want to edit the local lambda function now? __Y__   
+
+> Update `app.get('/pets') with the following:
+```js
+app.get('/pets', function(req, res) {
+  // Add your code here
+  // Return the API Gateway event and query string parameters for example
+  const pets = [
+    'Spike', 'Zeus', 'Butch'
+  ]
+  res.json({
+    success: 'get call succeed!',
+    url: req.url,
+    pets
+  });
+});
+```
+
+? Do you want to add another path? (y/N) __N__   
+? Which kind of privacy your API should have? __Authenticated and Guest users (AWS_IAM with Cognito Identity)__   
+? overwrite YOURFILEPATH-cloudformation-template.yml __Y__  
+
+> Now the resources have been created & configured & we can push them to our account: 
+
+```bash
+amplify push
+```
+
+#### Interacting with the new API
+
+Now that the API is created we can start sending requests to it & interacting with it.
+
+Let's request some data from the API:
+
+```js
+import { API } from 'aws-amplify'
+
+getData = async() => {
+  try {
+    const data = await API.get('amplifyrestapi', '/pets')
+    console.log('data:', data)
+  } catch (err) {
+    console.log('error fetching data..', err)
+  }
+}
+```
+
+## Adding a GraphQL API
 
 To add a GraphQL API, we can use the following command:
 
 ```sh
 amplify add api
+```
+
+>
+
+? Please select from one of the above mentioned services __GraphQL__   
+? Provide API name: __AmplifyWorkshopTest__   
+? Choose an authorization type for the API __API key__   
+? Do you have an annotated GraphQL schema? __No__   
+? Do you want a guided schema creation? __Y__   
+? What best describes your project: __Single object with fields (e.g. “Todo” with ID, name, description)__   
+? Do you want to edit the schema now? (Y/n) __Y__   
+
+> When prompted, update the schema to the following:   
+
+```graphql
+type Pet @model {
+  id: ID!
+  name: String!
+  description: String
+}
+```
+
+> Next, let's push the configuration to our account:
+
+```bash
+amplify push
 ```
 
 ## Working with Storage

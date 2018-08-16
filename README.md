@@ -8,8 +8,9 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 
 - Authentication
 - Analytics
-- GraphQL with AWS AppSync
-- Lambda Functions
+- GraphQL API with AWS AppSync
+- REST API with a Lambda Function
+- Adding Storage with Amazon S3
 
 ## Getting Started
 
@@ -299,6 +300,68 @@ type Pet @model {
 ```bash
 amplify push
 ```
+
+#### Interacting with the GraphQL API
+
+Now that the GraphQL API is created we can begin interacting with it!
+
+The first thing we would like to do is add items to our database. The way we do this in GraphQL is with mutations.
+
+To create a GraphQL mutation, we'll need to do two things:   
+1. Define the mutation
+2. Execute the mutation   
+
+Let's look at how we can do this in our React application:
+
+
+```js
+// import graphqlOperation & API from AWS Amplify
+import { graphqlOperation, API } from 'aws-amplify'
+
+// define the mutation
+const CreatePet = `
+  mutation($name: String!, description: String) {
+    createPet(input: {
+      name: $name, description: $description
+    }) {
+      id
+      name
+      description
+    }
+  }
+`
+
+// execute the mutation
+state = {
+  name: '', description: ''
+}
+createPet = async() => {
+  const { name, description } = this.state
+  const pet = { name, descripton }
+  try {
+    await API.graphql(graphqlOperation(CreatePet, pet))
+    console.log('item created!')
+  } catch (err) {
+    console.log('error creating pet...', err)
+  }
+}
+onChange = (event) => {
+  this.setState({
+    [event.target.name]: event.target.value
+  })
+}
+
+// add UI with event handlers to manage user input
+<input
+  name='name'
+  onChange={this.onChange}
+/>
+<input
+  name='description'
+  onChange={this.onChange}
+/>
+```
+
 
 ## Working with Storage
 

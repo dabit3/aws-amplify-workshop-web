@@ -2,6 +2,8 @@
 
 In this workshop we'll learn how to build cloud-enabled web applications with React & AWS Amplify.
 
+![](https://i.imgur.com/XZd2tkt.jpg)
+
 ### Topics we'll be covering:
 
 - Authentication

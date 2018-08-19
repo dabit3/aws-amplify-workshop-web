@@ -2,7 +2,7 @@
 
 In this workshop we'll learn how to build cloud-enabled web applications with React & AWS Amplify.
 
-![](https://i.imgur.com/GXuZhdZ.jpg)
+![](https://imgur.com/IPnnJyf.jpg)
 
 ### Topics we'll be covering:
 
@@ -43,7 +43,7 @@ yarn add aws-amplify aws-amplify-react
 Next, we'll install the AWS Amplify CLI:
 
 ```bash
-npm i -g amplify-cli
+npm install -g @aws-amplify/cli
 ```
 
 Now we'll create a new amplify project:
@@ -301,7 +301,7 @@ type Pet @model {
 amplify push
 ```
 
-#### Interacting with the GraphQL API
+#### Interacting with the GraphQL API - Performing mutations
 
 Now that the GraphQL API is created we can begin interacting with it!
 
@@ -320,7 +320,7 @@ import { graphqlOperation, API } from 'aws-amplify'
 
 // define the mutation
 const CreatePet = `
-  mutation($name: String!, description: String) {
+  mutation($name: String!, $description: String) {
     createPet(input: {
       name: $name, description: $description
     }) {
@@ -355,12 +355,18 @@ onChange = (event) => {
 <input
   name='name'
   onChange={this.onChange}
+  value={this.state.name}
 />
 <input
   name='description'
   onChange={this.onChange}
+  value={this.state.description}
 />
+<button onClick={this.createPet}>Create Pet</button>
 ```
+
+#### Interacting with the GraphQL API - Querying for data
+
 
 
 ## Working with Storage

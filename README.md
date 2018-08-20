@@ -67,7 +67,7 @@ Here we'll walk through the `amplify configure` setup. Once you've signed in to 
 amplify init
 ```
 
-> Next, we'll walk through the `amplify init` setup, but if you'd like to see a video walkthrough of this setup, click [here](https://www.youtube.com/watch?v=xHDDkv0LjUY).
+> Next, we'll walk through the `amplify init` setup, but if you'd like to see a video walkthrough of this setup, click [here](https://youtu.be/Y3l8nlNmVwk).
 
 - Choose your default editor: __Visual Studio Code (or your default editor)__   
 - Please choose the type of app that you're building __javascript__   

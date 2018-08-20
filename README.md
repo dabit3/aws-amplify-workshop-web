@@ -52,6 +52,8 @@ Now we need to configure the CLI with our credentials:
 amplify configure
 ```
 
+> If you'd like to see a video walkthrough of this configuration, click [here](https://youtu.be/Y3l8nlNmVwk).
+
 Here we'll walk through the `amplify configure` setup. Once you've signed in to the AWS console, continue:
 - Specify the AWS Region: __us-east-1__
 - Specify the username of the new IAM user: __amplify-workshop-user__
@@ -66,8 +68,6 @@ Here we'll walk through the `amplify configure` setup. Once you've signed in to 
 ```bash
 amplify init
 ```
-
-> Next, we'll walk through the `amplify init` setup, but if you'd like to see a video walkthrough of this setup, click [here](https://youtu.be/Y3l8nlNmVwk).
 
 - Choose your default editor: __Visual Studio Code (or your default editor)__   
 - Please choose the type of app that you're building __javascript__   

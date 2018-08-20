@@ -38,7 +38,9 @@ npm install --save aws-amplify aws-amplify-react
 yarn add aws-amplify aws-amplify-react
 ```
 
-## Initializing a new AWS Amplify Project
+## Installing the CLI & Initializing a new AWS Amplify Project
+
+### Installing the CLI
 
 Next, we'll install the AWS Amplify CLI:
 
@@ -52,7 +54,7 @@ Now we need to configure the CLI with our credentials:
 amplify configure
 ```
 
-> If you'd like to see a video walkthrough of this configuration, click [here](https://youtu.be/Y3l8nlNmVwk).
+> If you'd like to see a video walkthrough of this configuration, click [here](https://youtu.be/h0iWeF6i-E8).
 
 Here we'll walk through the `amplify configure` setup. Once you've signed in to the AWS console, continue:
 - Specify the AWS Region: __us-east-1__
@@ -63,7 +65,7 @@ Here we'll walk through the `amplify configure` setup. Once you've signed in to 
   secretAccessKey:  __(<YOUR_SECRET_ACCESS_KEY>)__
 - Profile Name: __(default)__
 
-#### With the CLI installed & configured, we can now create a new amplify project:
+### Initializing A New Project
 
 ```bash
 amplify init

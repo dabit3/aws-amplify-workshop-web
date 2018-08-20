@@ -54,25 +54,26 @@ amplify init
 
 > Next, we'll walk through the `amplify init` setup, but if you'd like to see a video walkthrough of this setup, click [here](https://www.youtube.com/watch?v=xHDDkv0LjUY).
 
-? Please enter a name for the project __amplifyapp__   
-? Choose your default editor: __Visual Studio Code # or your default editor__   
-? Please choose the type of app that you're building __javascript__   
-? What javascript framework are you using __react__   
-? Source Directory Path: __src__    \
-? Distribution Directory Path: __build__   
-? Build Command: __npm run-script build__   
-? Start Command: __npm run-script start__   
-? Setup new user __Y__
+- Please enter a name for the project __amplifyapp__   
+- Choose your default editor: __Visual Studio Code # or your default editor__   
+- Please choose the type of app that you're building __javascript__   
+- What javascript framework are you using __react__   
+- Source Directory Path: __src__    \
+- Distribution Directory Path: __build__   
+- Build Command: __npm run-script build__   
+- Start Command: __npm run-script start__   
+- Setup new user __Y__
+
 > Next, sign in to your your AWS account, then return to the command line & click Enter 
 
-? Please specify the aws region: __us-east-1 #or eu-central-1__   
-? user name: __amplify-cli-user__   
+- Please specify the aws region: __us-east-1 #or eu-central-1__   
+- user name: __amplify-cli-user__   
 > In the AWS Console, click __Next: Permissions__, __Next: Review__, & __Create User__ to create the new IAM user. Then, return to the command line & press Enter.   
 
-? accessKeyId: __YOURIDHERE__   
-? secretAccessKey: __YOURSECRETACCESSKEYHERE__   
-? Assign a profile name for this user: __N__   
-? Do you want to setup project specific configuration __N__   
+- accessKeyId: __YOURIDHERE__   
+- secretAccessKey: __YOURSECRETACCESSKEYHERE__   
+- Assign a profile name for this user: __N__   
+- Do you want to setup project specific configuration __N__   
 
 Now, the AWS Amplify CLI has iniatilized a new project & you will see a couple of new files & folders: __amplify__ & __.amplifyrc__. These files hold your project configuration.
 
@@ -213,14 +214,16 @@ To add a REST API, we can use the following command:
 amplify add api
 ```
 
-? Please select from one of the above mentioned services __REST__   
-? Please provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapi__   
-? Please provide a path, e.g. /items __/pets__   
-? Please select lambda source __Create a new Lambda function__   
-? Please provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapilambda__   
-? Please provide the Lambda function name: __amplifyrestapilambda__   
-? Please select the function template you want to use: __Serverless express function (Integration with Amazon API Gateway)__   
-? Do you want to edit the local lambda function now? __Y__   
+> Answer the following questions
+
+- Please select from one of the above mentioned services __REST__   
+- Please provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapi__   
+- Please provide a path, e.g. /items __/pets__   
+- Please select lambda source __Create a new Lambda function__   
+- Please provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapilambda__   
+- Please provide the Lambda function name: __amplifyrestapilambda__   
+- Please select the function template you want to use: __Serverless express function (Integration with Amazon API Gateway)__   
+- Do you want to edit the local lambda function now? __Y__   
 
 > Update `app.get('/pets') with the following:
 ```js
@@ -275,15 +278,15 @@ To add a GraphQL API, we can use the following command:
 amplify add api
 ```
 
->
+Answer the following questions
 
-? Please select from one of the above mentioned services __GraphQL__   
-? Provide API name: __AmplifyWorkshopTest__   
-? Choose an authorization type for the API __API key__   
-? Do you have an annotated GraphQL schema? __No__   
-? Do you want a guided schema creation? __Y__   
-? What best describes your project: __Single object with fields (e.g. “Todo” with ID, name, description)__   
-? Do you want to edit the schema now? (Y/n) __Y__   
+- Please select from one of the above mentioned services __GraphQL__   
+- Provide API name: __AmplifyWorkshopTest__   
+- Choose an authorization type for the API __API key__   
+- Do you have an annotated GraphQL schema? __No__   
+- Do you want a guided schema creation? __Y__   
+- What best describes your project: __Single object with fields (e.g. “Todo” with ID, name, description)__   
+- Do you want to edit the schema now? (Y/n) __Y__   
 
 > When prompted, update the schema to the following:   
 
@@ -377,4 +380,66 @@ To add storage, we can use the following command:
 amplify add storage
 ```
 
+> Answer the following questions   
+
+- Please select from one of the below mentioned services __Content (Images, audio, video, etc.)__
+- Please provide a friendly name for your resource that will be used to label this category in the
+ project: __YOURBUCKETNAME__
+- Please provide bucket name: amplifywebworkshops3test
+- Who should have access: Auth users only
+- What kind of access do you want for Authenticated users read/write   
+
+Now, storage is configured & ready to use.
+
+What we've done above is created configured an Amazon S3 bucket that we can now start using for storing items.
+
+For example, if we wanted to test it out we could store some text in a file like this:
+
+```js
+addToStorage = () => {
+  Storage.put('javascript/MyReactComponent.js', `
+  import React from 'react'
+  const App = () => (
+    <p>Hello World</p>
+  )
+  export default App
+  `)
+    .then (result => {
+      console.log('result: ', result)
+    })
+    .catch(err => console.log('error: ', err));
+}
+```
+
+This would create a folder called `javascript` in our S3 bucket & store a file called __MyReactComponent.js__ there with the code we specified in the second argument of `Storage.put`.
+
+If we wanted to read everything from this folder, we could use this function:
+
+```js
+readFromStorage = () => {
+  Storage.get('javascript/')
+    .then(data => console.log('data from S3: ', data)
+    .catch(err => console.log('error'))
+}
+```
+
+If we only wanted to read the single file, we could use this function:
+
+```js
+readFromStorage = () => {
+  Storage.get('javascript/MyReactComponent.js')
+    .then(data => console.log('data from S3: ', data)
+    .catch(err => console.log('error'))
+}
+```
+
+If we wanted to pull down everything, we could use this function:
+
+```js
+readFromStorage = () => {
+  Storage.get('')
+    .then(data => console.log('data from S3: ', data)
+    .catch(err => console.log('error'))
+}
+```
 

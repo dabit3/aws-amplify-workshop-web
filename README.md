@@ -46,7 +46,22 @@ Next, we'll install the AWS Amplify CLI:
 npm install -g @aws-amplify/cli
 ```
 
-Now we'll create a new amplify project:
+Now we need to configure the CLI with our credentials:
+
+```js
+amplify configure
+```
+
+Here we'll walk through the `amplify configure` setup. Once you've signed in to the AWS console, continue:
+- Specify the AWS Region: __us-east-1__
+- Specify the username of the new IAM user: __amplify-workshop-user__
+> In the AWS Console, click __Next: Permissions__, __Next: Review__, & __Create User__ to create the new IAM user. Then, return to the command line & press Enter.
+- Enter the access key of the newly created user:   
+  accessKeyId: __(<YOUR_ACCESS_KEY_ID>)__   
+  secretAccessKey:  __(<YOUR_SECRET_ACCESS_KEY>)__
+- Profile Name: __(default)__
+
+#### With the CLI installed & configured, we can now create a new amplify project:
 
 ```bash
 amplify init
@@ -54,26 +69,15 @@ amplify init
 
 > Next, we'll walk through the `amplify init` setup, but if you'd like to see a video walkthrough of this setup, click [here](https://www.youtube.com/watch?v=xHDDkv0LjUY).
 
-- Please enter a name for the project __amplifyapp__   
-- Choose your default editor: __Visual Studio Code # or your default editor__   
+- Choose your default editor: __Visual Studio Code (or your default editor)__   
 - Please choose the type of app that you're building __javascript__   
 - What javascript framework are you using __react__   
-- Source Directory Path: __src__    \
+- Source Directory Path: __src__   
 - Distribution Directory Path: __build__   
 - Build Command: __npm run-script build__   
 - Start Command: __npm run-script start__   
-- Setup new user __Y__
-
-> Next, sign in to your your AWS account, then return to the command line & click Enter 
-
-- Please specify the aws region: __us-east-1 #or eu-central-1__   
-- user name: __amplify-cli-user__   
-> In the AWS Console, click __Next: Permissions__, __Next: Review__, & __Create User__ to create the new IAM user. Then, return to the command line & press Enter.   
-
-- accessKeyId: __YOURIDHERE__   
-- secretAccessKey: __YOURSECRETACCESSKEYHERE__   
-- Assign a profile name for this user: __N__   
-- Do you want to setup project specific configuration __N__   
+- Do you want to use an AWS profile? __Y__
+- Please choose the profile you want to use: __default__
 
 Now, the AWS Amplify CLI has iniatilized a new project & you will see a couple of new files & folders: __amplify__ & __.amplifyrc__. These files hold your project configuration.
 

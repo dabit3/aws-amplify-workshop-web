@@ -54,7 +54,7 @@ Now we need to configure the CLI with our credentials:
 amplify configure
 ```
 
-> If you'd like to see a video walkthrough of this configuration, click [here](https://youtu.be/h0iWeF6i-E8).
+> If you'd like to see a video walkthrough of this configuration, click [here](hhttps://www.youtube.com/watch?v=fWbM5DLh25U).
 
 Here we'll walk through the `amplify configure` setup. Once you've signed in to the AWS console, continue:
 - Specify the AWS Region: __us-east-1__

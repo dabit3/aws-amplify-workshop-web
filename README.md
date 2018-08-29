@@ -6,7 +6,7 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 
 ### Topics we'll be covering:
 
-- [Authentication](hhttps://github.com/dabit3/aws-amplify-workshop-web#adding-authentication)
+- [Authentication](https://github.com/dabit3/aws-amplify-workshop-web#adding-authentication)
 - [Analytics](https://github.com/dabit3/aws-amplify-workshop-web#adding-analytics)
 - [GraphQL API with AWS AppSync](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-rest-api)
 - [REST API with a Lambda Function](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-graphql-api)

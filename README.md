@@ -1,16 +1,16 @@
 # Building Web Applications with AWS Amplify
 
-In this workshop we'll learn how to build cloud-enabled web applications with React & AWS Amplify.
+In this workshop we'll learn how to build cloud-enabled web applications with React & [AWS Amplify](https://aws-amplify.github.io/).
 
 ![](https://imgur.com/IPnnJyf.jpg)
 
 ### Topics we'll be covering:
 
-- [Authentication](https://aws-amplify.github.io/amplify-js/media/authentication_guide)
-- [Analytics](https://aws-amplify.github.io/amplify-js/media/analytics_guide)
-- [GraphQL API with AWS AppSync](https://aws-amplify.github.io/amplify-js/media/api_guide#using-graphql-endpoints)
-- [REST API with a Lambda Function](https://aws-amplify.github.io/amplify-js/media/api_guide#using-graphql-endpoints)
-- [Adding Storage with Amazon S3](https://aws-amplify.github.io/amplify-js/media/storage_guide)
+- [Authentication](hhttps://github.com/dabit3/aws-amplify-workshop-web#adding-authentication)
+- [Analytics](https://github.com/dabit3/aws-amplify-workshop-web#adding-analytics)
+- [GraphQL API with AWS AppSync](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-rest-api)
+- [REST API with a Lambda Function](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-graphql-api)
+- [Adding Storage with Amazon S3](https://github.com/dabit3/aws-amplify-workshop-web#working-with-storage)
 
 ## Getting Started
 

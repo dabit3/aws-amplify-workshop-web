@@ -12,6 +12,14 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 - [REST API with a Lambda Function](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-graphql-api)
 - [Adding Storage with Amazon S3](https://github.com/dabit3/aws-amplify-workshop-web#working-with-storage)
 
+## Redeeming our AWS Credit   
+
+1. Visit the [AWS Console](https://console.aws.amazon.com/console).
+2. In the top right corner, click on __My Account__.
+![](dashboard1.jpg)
+3. In the left menu, click __Credits__.
+![](dashboard2.jpg)
+
 ## Getting Started
 
 To get started, we first need to create a new React project & change into the new directory using the [Create React App CLI](https://github.com/facebook/create-react-app).

@@ -310,7 +310,7 @@ type Pet @model {
 amplify push
 ```
 
-#### Interacting with the GraphQL API - Performing mutations
+### Interacting with the GraphQL API - Performing mutations
 
 Now that the GraphQL API is created we can begin interacting with it!
 
@@ -379,7 +379,7 @@ onChange = (event) => {
 <button onClick={this.createPet}>Create Pet</button>
 ```
 
-#### Querying for data
+### Querying for data
 
 Now that we've created a couple of items in our API, let's query for them.
 

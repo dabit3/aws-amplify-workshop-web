@@ -6,11 +6,11 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 
 ### Topics we'll be covering:
 
-- Authentication
-- Analytics
-- GraphQL API with AWS AppSync
-- REST API with a Lambda Function
-- Adding Storage with Amazon S3
+- [Authentication](https://aws-amplify.github.io/amplify-js/media/authentication_guide)
+- [Analytics](https://aws-amplify.github.io/amplify-js/media/analytics_guide)
+- [GraphQL API with AWS AppSync](https://aws-amplify.github.io/amplify-js/media/api_guide#using-graphql-endpoints)
+- [REST API with a Lambda Function](https://aws-amplify.github.io/amplify-js/media/api_guide#using-graphql-endpoints)
+- [Adding Storage with Amazon S3](https://aws-amplify.github.io/amplify-js/media/storage_guide)
 
 ## Getting Started
 

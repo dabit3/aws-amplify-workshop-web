@@ -322,7 +322,6 @@ To create a GraphQL mutation, we'll need to do two things:
 
 Let's look at how we can do this in our React application:
 
-
 ```js
 // import graphqlOperation & API from AWS Amplify
 import { graphqlOperation, API } from 'aws-amplify'
@@ -340,13 +339,18 @@ const CreatePet = `
   }
 `
 
-// execute the mutation
+// create initial state
 state = {
   name: '', description: ''
 }
+// execute mutation
 createPet = async() => {
   const { name, description } = this.state
-  const pet = { name, descripton }
+  if (name === '') return
+  let pet = { name }
+  if (description !== '') {
+    pet = { ...pet, description }
+  }
   try {
     await API.graphql(graphqlOperation(CreatePet, pet))
     console.log('item created!')
@@ -354,6 +358,7 @@ createPet = async() => {
     console.log('error creating pet...', err)
   }
 }
+// change state then user types into input
 onChange = (event) => {
   this.setState({
     [event.target.name]: event.target.value
@@ -374,9 +379,84 @@ onChange = (event) => {
 <button onClick={this.createPet}>Create Pet</button>
 ```
 
-#### Interacting with the GraphQL API - Querying for data
+#### Querying for data
 
+Now that we've created a couple of items in our API, let's query for them.
 
+To do so, we need to define the query, execute the query, store the data in our state, then list the items in our UI.
+
+```js
+// define query
+const ListPets = `
+  query {
+    listPets {
+      items {
+        id
+        name
+        description
+      }
+    }
+  }
+`
+
+// define some state to hold the data returned from the API
+state = {
+  name: '', description: '', pets: []
+}
+
+// execute the query in componentDidMount
+async componentDidMount() {
+  try {
+    const pets = await API.graphql(graphqlOperation(ListPets))
+    console.log('pets:', pets)
+    this.setState({
+      pets: pets.data.listPets.items
+    })
+  } catch (err) {
+    console.log('error fetching pets...', err)
+  }
+}
+
+// render the data in our UI
+  {
+    this.state.pets.map((pet, index) => (
+      <div key={index}>
+        <h3>{pet.name}</h3>
+        <p>{pet.description}</p>
+      </div>
+    ))
+  }
+```
+
+### GraphQL Subscriptions
+
+Next, let's see how we can create a subscription to subscribe to changes of data in our API.
+
+To do so, we need to define the subscription, listen for the subscription, & update the state whenever a new piece of data comes in through the subscription.
+
+```js
+// define the subscription
+const SubscribeToNewPets = `subscription {
+  onCreatePet {
+    id
+    name
+    description
+  }
+}`;
+
+// subscribe in componentDidMount
+API.graphql(
+  graphqlOperation(SubscribeToNewPets)
+).subscribe({
+    next: (eventData) => {
+      console.log('eventData', eventData)
+      const pet = eventData.value.data.onCreatePet
+      const pets = [...this.state.pets, pet]
+      pets.filter(item => item.id !== pet.id)
+      this.setState({ pets })
+    }
+});
+```
 
 ## Working with Storage
 

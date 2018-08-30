@@ -8,9 +8,10 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 
 - [Authentication](https://github.com/dabit3/aws-amplify-workshop-web#adding-authentication)
 - [Analytics](https://github.com/dabit3/aws-amplify-workshop-web#adding-analytics)
-- [GraphQL API with AWS AppSync](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-rest-api)
 - [REST API with a Lambda Function](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-graphql-api)
+- [GraphQL API with AWS AppSync](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-rest-api)
 - [Adding Storage with Amazon S3](https://github.com/dabit3/aws-amplify-workshop-web#working-with-storage)
+- [Hosting](https://github.com/dabit3/aws-amplify-workshop-web#hosting)
 
 ## Redeeming our AWS Credit   
 
@@ -24,7 +25,7 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 
 To get started, we first need to create a new React project & change into the new directory using the [Create React App CLI](https://github.com/facebook/create-react-app).
 
-If you already have this installed, skip to the next step. If not, either install the CLI & create a new app:
+If you already have this installed, skip to the next step. If not, either install the CLI & create the app or create a new app using npx:
 
 ```bash
 npm install -g create-react-app
@@ -535,5 +536,24 @@ readFromStorage = () => {
     .then(data => console.log('data from S3: ', data)
     .catch(err => console.log('error'))
 }
+```
+
+## Hosting
+
+To deploy & host your app on AWS, we can use the `hosting` category.
+
+```sh
+amplify add hosting
+```
+
+- Select the environment setup: __DEV (S3 only with HTTP)__
+- hosting bucket name __YOURBUCKETNAME__
+- index doc for the website __index.html__
+- error doc for the website __index.html__
+
+Now, everything is set up & we can publish it:
+
+```sh
+amplify publish
 ```
 

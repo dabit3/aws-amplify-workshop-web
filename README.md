@@ -241,6 +241,8 @@ recordEvent = () => {
     }
   })
 }
+
+<button onClick={this.recordEvent}>Record Event</button>
 ```
 
 ## Adding a REST API

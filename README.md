@@ -336,7 +336,7 @@ Answer the following questions
 - Please select from one of the above mentioned services __GraphQL__   
 - Provide API name: __AmplifyWorkshopTest__   
 - Choose an authorization type for the API __API key__   
-- Do you have an annotated GraphQL schema? __No__   
+- Do you have an annotated GraphQL schema? __N__   
 - Do you want a guided schema creation? __Y__   
 - What best describes your project: __Single object with fields (e.g. “Todo” with ID, name, description)__   
 - Do you want to edit the schema now? (Y/n) __Y__   
@@ -357,11 +357,58 @@ type Pet @model {
 amplify push
 ```
 
-## Interacting with the GraphQL API - Performing mutations
+### Interacting with the GraphQL API - Querying for data
 
 Now that the GraphQL API is created we can begin interacting with it!
 
-The first thing we would like to do is add items to our database. The way we do this in GraphQL is with mutations.
+The first thing we'll do is perform a query to fetch data from our API.
+
+To do so, we need to define the query, execute the query, store the data in our state, then list the items in our UI.
+
+```js
+// define query
+const ListPets = `
+  query {
+    listPets {
+      items {
+        id
+        name
+        description
+      }
+    }
+  }
+`
+
+// define some state to hold the data returned from the API
+state = {
+  name: '', description: '', pets: []
+}
+
+// execute the query in componentDidMount
+async componentDidMount() {
+  try {
+    const pets = await API.graphql(graphqlOperation(ListPets))
+    console.log('pets:', pets)
+    this.setState({
+      pets: pets.data.listPets.items
+    })
+  } catch (err) {
+    console.log('error fetching pets...', err)
+  }
+}
+
+// render the data in our UI
+  {
+    this.state.pets.map((pet, index) => (
+      <div key={index}>
+        <h3>{pet.name}</h3>
+        <p>{pet.description}</p>
+      </div>
+    ))
+  }
+```
+
+## Performing mutations
 
 To create a GraphQL mutation, we'll need to do two things:   
 1. Define the mutation
@@ -424,55 +471,6 @@ onChange = (event) => {
   value={this.state.description}
 />
 <button onClick={this.createPet}>Create Pet</button>
-```
-
-### Querying for data
-
-Now that we've created a couple of items in our API, let's query for them.
-
-To do so, we need to define the query, execute the query, store the data in our state, then list the items in our UI.
-
-```js
-// define query
-const ListPets = `
-  query {
-    listPets {
-      items {
-        id
-        name
-        description
-      }
-    }
-  }
-`
-
-// define some state to hold the data returned from the API
-state = {
-  name: '', description: '', pets: []
-}
-
-// execute the query in componentDidMount
-async componentDidMount() {
-  try {
-    const pets = await API.graphql(graphqlOperation(ListPets))
-    console.log('pets:', pets)
-    this.setState({
-      pets: pets.data.listPets.items
-    })
-  } catch (err) {
-    console.log('error fetching pets...', err)
-  }
-}
-
-// render the data in our UI
-  {
-    this.state.pets.map((pet, index) => (
-      <div key={index}>
-        <h3>{pet.name}</h3>
-        <p>{pet.description}</p>
-      </div>
-    ))
-  }
 ```
 
 ### GraphQL Subscriptions

@@ -547,19 +547,25 @@ What we've done above is created configured an Amazon S3 bucket that we can now 
 For example, if we wanted to test it out we could store some text in a file like this:
 
 ```js
+import { Storage } from 'aws-amplify'
+
+// create function to work with Storage
 addToStorage = () => {
   Storage.put('javascript/MyReactComponent.js', `
-  import React from 'react'
-  const App = () => (
-    <p>Hello World</p>
-  )
-  export default App
+    import React from 'react'
+    const App = () => (
+      <p>Hello World</p>
+    )
+    export default App
   `)
     .then (result => {
       console.log('result: ', result)
     })
     .catch(err => console.log('error: ', err));
 }
+
+// add click handler
+<button onClick={this.addToStorage}>Add To Storage</button>
 ```
 
 This would create a folder called `javascript` in our S3 bucket & store a file called __MyReactComponent.js__ there with the code we specified in the second argument of `Storage.put`.
@@ -569,7 +575,7 @@ If we wanted to read everything from this folder, we could use this function:
 ```js
 readFromStorage = () => {
   Storage.get('javascript/')
-    .then(data => console.log('data from S3: ', data)
+    .then(data => console.log('data from S3: ', data))
     .catch(err => console.log('error'))
 }
 ```
@@ -592,6 +598,33 @@ readFromStorage = () => {
     .then(data => console.log('data from S3: ', data)
     .catch(err => console.log('error'))
 }
+```
+
+### Working with images
+
+Working with images is also easy:
+
+```js
+class S3ImageUpload extends React.Component {
+  onChange(e) {
+      const file = e.target.files[0];
+      Storage.put('example.png', file, {
+          contentType: 'image/png'
+      })
+      .then (result => console.log(result))
+      .catch(err => console.log(err));
+  }
+
+  render() {
+      return (
+          <input
+              type="file" accept='image/png'
+              onChange={(e) => this.onChange(e)}
+          />
+      )
+  }
+}
+
 ```
 
 ## Hosting

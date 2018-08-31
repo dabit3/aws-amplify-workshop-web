@@ -297,7 +297,11 @@ The first thing we'll do is perform a query to fetch data from our API.
 
 To do so, we need to define the query, execute the query, store the data in our state, then list the items in our UI.
 
+
 ```js
+// imports from Amplify library
+import { API, graphqlOperation } from 'aws-amplify'
+
 // define query
 const ListPets = `
   query {
@@ -342,14 +346,9 @@ async componentDidMount() {
 
 ## Performing mutations
 
-To create a GraphQL mutation, we'll need to do two things:   
-1. Define the mutation
-2. Execute the mutation   
-
-Let's look at how we can do this in our React application:
+ Now, let's look at how we can create mutations.
 
 ```js
-// import graphqlOperation & API from AWS Amplify
 import { graphqlOperation, API } from 'aws-amplify'
 
 // define the new mutation

@@ -21,7 +21,7 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 3. In the left menu, click __Credits__.
 ![](dashboard2.jpg)
 
-## Getting Started
+## Getting Started - Creating the React Application
 
 To get started, we first need to create a new React project & change into the new directory using the [Create React App CLI](https://github.com/facebook/create-react-app).
 

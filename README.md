@@ -299,13 +299,27 @@ Let's request some data from the API:
 ```js
 import { API } from 'aws-amplify'
 
+// create initial state
+state = { pets: [] }
+
+// fetch data at componentDidMount
+componentDidMount() {
+  this.getData()
+}
 getData = async() => {
   try {
-    const data = await API.get('amplifyrestapi', '/pets')
-    console.log('data:', data)
+    const data = await API.get('apif8f4b7fe', '/pets')
+    this.setState({ pets: data.pets })
   } catch (err) {
     console.log('error fetching data..', err)
   }
+}
+
+// implement into render method
+{
+  this.state.pets.map((p, i) => (
+    <p key={i}>{p}</p>
+  ))
 }
 ```
 

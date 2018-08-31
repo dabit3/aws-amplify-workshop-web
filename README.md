@@ -117,7 +117,7 @@ Now, our resources are created & we can start using them!
 
 The first thing we need to do is to configure our React application to be aware of our new AWS Amplify project. We can do this by referencing the auto-generated `aws-exports.js` file that is now in our src folder.
 
-To configure the app, open __index.js__ and add the following code below the last import:
+To configure the app, open __src/index.js__ and add the following code below the last import:
 
 ```js
 import Amplify from 'aws-amplify'

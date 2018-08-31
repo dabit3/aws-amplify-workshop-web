@@ -2,20 +2,26 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component {
+import { Storage } from 'aws-amplify'
+
+class S3ImageUpload extends React.Component {
+  onChange(e) {
+      const file = e.target.files[0];
+      Storage.put('example.png', file, {
+          contentType: 'image/png'
+      })
+      .then (result => console.log(result))
+      .catch(err => console.log(err));
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      return (
+          <input
+              type="file" accept='image/png'
+              onChange={(e) => this.onChange(e)}
+          />
+      )
   }
 }
 
-export default App;
+export default S3ImageUpload;

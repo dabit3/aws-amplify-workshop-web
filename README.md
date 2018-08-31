@@ -7,11 +7,11 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 ### Topics we'll be covering:
 
 - [Authentication](https://github.com/dabit3/aws-amplify-workshop-web#adding-authentication)
-- [Analytics](https://github.com/dabit3/aws-amplify-workshop-web#adding-analytics)
-- [REST API with a Lambda Function](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-graphql-api)
 - [GraphQL API with AWS AppSync](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-rest-api)
+- [REST API with a Lambda Function](https://github.com/dabit3/aws-amplify-workshop-web#adding-a-graphql-api)
 - [Adding Storage with Amazon S3](https://github.com/dabit3/aws-amplify-workshop-web#working-with-storage)
 - [Hosting](https://github.com/dabit3/aws-amplify-workshop-web#hosting)
+- [Analytics](https://github.com/dabit3/aws-amplify-workshop-web#adding-analytics)
 
 ## Redeeming our AWS Credit   
 
@@ -195,131 +195,6 @@ signUp = async() => {
   } catch (err) {
     console.log('error signing up user...', err)
   }
-}
-```
-
-## Adding Analytics
-
-To add analytics, we can use the following command:
-
-```sh
-amplify add analytics
-```
-
-> Next, we'll be prompted for the following:
-
-? Provide your pinpoint resource name: __amplifyanalytics__   
-? Apps need authorization to send analytics events. Do you want to allow guest/unauthenticated users to send analytics events (recommended when getting started)? __Y__   
-? overwrite YOURFILEPATH-cloudformation-template.yml __Y__
-
-### Recording events
-
-Now that the service has been created we can now begin recording events.
-
-To record analytics events, we need to import the `Analytics` class from Amplify & then call `Analytics.record`:
-
-```js
-import { Analytics } from 'aws-amplify'
-
-state = {username: ''}
-
-async componentDidMount() {
-  try {
-    const user = await Auth.currentAuthenticatedUser()
-    this.setState({ username: user.username })
-  } catch (err) {
-    console.log('error getting user: ', err)
-  }
-}
-
-recordEvent = () => {
-  Analytics.record({
-    name: 'My test event',
-    attributes: {
-      username: this.state.username
-    }
-  })
-}
-
-<button onClick={this.recordEvent}>Record Event</button>
-```
-
-## Adding a REST API
-
-To add a REST API, we can use the following command:
-
-```sh
-amplify add api
-```
-
-> Answer the following questions
-
-- Please select from one of the above mentioned services __REST__   
-- Provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapi__   
-- Provide a path, e.g. /items __/pets__   
-- Choose lambda source __Create a new Lambda function__   
-- Provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapilambda__   
-- Provide the Lambda function name: __amplifyrestapilambda__   
-- Please select the function template you want to use: __Serverless express function (Integration with Amazon API Gateway)__   
-- Restrict API access __N__
-- Do you want to edit the local lambda function now? __Y__   
-
-> Update the existing `app.get('/pets') route with the following:
-```js
-app.get('/pets', function(req, res) {
-  // Add your code here
-  // Return the API Gateway event and query string parameters for example
-  const pets = [
-    'Spike', 'Zeus', 'Butch'
-  ]
-  res.json({
-    success: 'get call succeed!',
-    url: req.url,
-    pets
-  });
-});
-```
-
-? Do you want to add another path? (y/N) __N__   
-? Which kind of privacy your API should have? __Authenticated and Guest users (AWS_IAM with Cognito Identity)__   
-? overwrite YOURFILEPATH-cloudformation-template.yml __Y__  
-
-> Now the resources have been created & configured & we can push them to our account: 
-
-```bash
-amplify push
-```
-
-### Interacting with the new API
-
-Now that the API is created we can start sending requests to it & interacting with it.
-
-Let's request some data from the API:
-
-```js
-import { API } from 'aws-amplify'
-
-// create initial state
-state = { pets: [] }
-
-// fetch data at componentDidMount
-componentDidMount() {
-  this.getData()
-}
-getData = async() => {
-  try {
-    const data = await API.get('apif8f4b7fe', '/pets')
-    this.setState({ pets: data.pets })
-  } catch (err) {
-    console.log('error fetching data..', err)
-  }
-}
-
-// implement into render method
-{
-  this.state.pets.map((p, i) => (
-    <p key={i}>{p}</p>
-  ))
 }
 ```
 
@@ -518,6 +393,85 @@ API.graphql(
 });
 ```
 
+## Adding a REST API
+
+To add a REST API, we can use the following command:
+
+```sh
+amplify add api
+```
+
+> Answer the following questions
+
+- Please select from one of the above mentioned services __REST__   
+- Provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapi__   
+- Provide a path, e.g. /items __/pets__   
+- Choose lambda source __Create a new Lambda function__   
+- Provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapilambda__   
+- Provide the Lambda function name: __amplifyrestapilambda__   
+- Please select the function template you want to use: __Serverless express function (Integration with Amazon API Gateway)__   
+- Restrict API access __N__
+- Do you want to edit the local lambda function now? __Y__   
+
+> Update the existing `app.get('/pets') route with the following:
+```js
+app.get('/pets', function(req, res) {
+  // Add your code here
+  // Return the API Gateway event and query string parameters for example
+  const pets = [
+    'Spike', 'Zeus', 'Butch'
+  ]
+  res.json({
+    success: 'get call succeed!',
+    url: req.url,
+    pets
+  });
+});
+```
+
+? Do you want to add another path? (y/N) __N__   
+? Which kind of privacy your API should have? __Authenticated and Guest users (AWS_IAM with Cognito Identity)__   
+? overwrite YOURFILEPATH-cloudformation-template.yml __Y__  
+
+> Now the resources have been created & configured & we can push them to our account: 
+
+```bash
+amplify push
+```
+
+### Interacting with the new API
+
+Now that the API is created we can start sending requests to it & interacting with it.
+
+Let's request some data from the API:
+
+```js
+import { API } from 'aws-amplify'
+
+// create initial state
+state = { pets: [] }
+
+// fetch data at componentDidMount
+componentDidMount() {
+  this.getData()
+}
+getData = async() => {
+  try {
+    const data = await API.get('apif8f4b7fe', '/pets')
+    this.setState({ pets: data.pets })
+  } catch (err) {
+    console.log('error fetching data..', err)
+  }
+}
+
+// implement into render method
+{
+  this.state.pets.map((p, i) => (
+    <p key={i}>{p}</p>
+  ))
+}
+```
+
 ## Working with Storage
 
 To add storage, we can use the following command:
@@ -646,3 +600,48 @@ Now, everything is set up & we can publish it:
 amplify publish
 ```
 
+## Adding Analytics
+
+To add analytics, we can use the following command:
+
+```sh
+amplify add analytics
+```
+
+> Next, we'll be prompted for the following:
+
+? Provide your pinpoint resource name: __amplifyanalytics__   
+? Apps need authorization to send analytics events. Do you want to allow guest/unauthenticated users to send analytics events (recommended when getting started)? __Y__   
+? overwrite YOURFILEPATH-cloudformation-template.yml __Y__
+
+### Recording events
+
+Now that the service has been created we can now begin recording events.
+
+To record analytics events, we need to import the `Analytics` class from Amplify & then call `Analytics.record`:
+
+```js
+import { Analytics } from 'aws-amplify'
+
+state = {username: ''}
+
+async componentDidMount() {
+  try {
+    const user = await Auth.currentAuthenticatedUser()
+    this.setState({ username: user.username })
+  } catch (err) {
+    console.log('error getting user: ', err)
+  }
+}
+
+recordEvent = () => {
+  Analytics.record({
+    name: 'My test event',
+    attributes: {
+      username: this.state.username
+    }
+  })
+}
+
+<button onClick={this.recordEvent}>Record Event</button>
+```

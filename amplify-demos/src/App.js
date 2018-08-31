@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import { withAuthenticator } from 'aws-amplify-react'
 class App extends Component {
   render() {
     return (
@@ -19,4 +18,4 @@ class App extends Component {
   }
 }
 
-export default withAuthenticator(App)
+export default App

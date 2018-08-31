@@ -198,7 +198,6 @@ signUp = async() => {
 }
 ```
 
-
 ## Adding Analytics
 
 To add analytics, we can use the following command:
@@ -213,7 +212,7 @@ amplify add analytics
 ? Apps need authorization to send analytics events. Do you want to allow guest/unauthenticated users to send analytics events (recommended when getting started)? __Y__   
 ? overwrite YOURFILEPATH-cloudformation-template.yml __Y__
 
-#### Recording events
+### Recording events
 
 Now that the service has been created we can now begin recording events.
 
@@ -291,7 +290,7 @@ app.get('/pets', function(req, res) {
 amplify push
 ```
 
-#### Interacting with the new API
+### Interacting with the new API
 
 Now that the API is created we can start sending requests to it & interacting with it.
 
@@ -344,7 +343,7 @@ type Pet @model {
 amplify push
 ```
 
-### Interacting with the GraphQL API - Performing mutations
+## Interacting with the GraphQL API - Performing mutations
 
 Now that the GraphQL API is created we can begin interacting with it!
 

@@ -381,7 +381,7 @@ const ListPets = `
 
 // define some state to hold the data returned from the API
 state = {
-  pets: []
+  pets: [],
 }
 
 // execute the query in componentDidMount

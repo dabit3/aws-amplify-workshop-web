@@ -530,10 +530,10 @@ amplify add storage
 
 - Please select from one of the below mentioned services __Content (Images, audio, video, etc.)__
 - Please provide a friendly name for your resource that will be used to label this category in the
- project: __YOURBUCKETNAME__
-- Please provide bucket name: amplifywebworkshops3test
-- Who should have access: Auth users only
-- What kind of access do you want for Authenticated users read/write   
+ project: __YOURAPINAME__
+- Please provide bucket name: __YOURBUCKETNAME__
+- Who should have access: __Auth users only__
+- What kind of access do you want for Authenticated users __read/write__   
 
 Now, storage is configured & ready to use.
 

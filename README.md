@@ -222,11 +222,22 @@ To record analytics events, we need to import the `Analytics` class from Amplify
 ```js
 import { Analytics } from 'aws-amplify'
 
+state = {username: ''}
+
+async componentDidMount() {
+  try {
+    const user = await Auth.currentAuthenticatedUser()
+    this.setState({ username: user.username })
+  } catch (err) {
+    console.log('error getting user: ', err)
+  }
+}
+
 recordEvent = () => {
   Analytics.record({
     name: 'My test event',
     attributes: {
-      username: 'naderdabit'
+      username: this.state.username
     }
   })
 }

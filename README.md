@@ -12,6 +12,7 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 - [Adding Storage with Amazon S3](https://github.com/dabit3/aws-amplify-workshop-web#working-with-storage)
 - [Hosting](https://github.com/dabit3/aws-amplify-workshop-web#hosting)
 - [Analytics](https://github.com/dabit3/aws-amplify-workshop-web#adding-analytics)
+- [Removing / Deleting Services](https://github.com/dabit3/aws-amplify-workshop-web#removing-services)
 
 ## Redeeming our AWS Credit   
 
@@ -528,6 +529,59 @@ getData = async() => {
 }
 ```
 
+### Fetching data from another API in a Lambda function.
+
+Next, let's configure the REST API to add another endpoint that will fetch data from an external resource.
+
+The first thing we need to do is install `axios` in our Lambda function folder.
+
+Navigate to __amplify/backend/function/<FUNCTION_NAME>/src__ and install __axios__:
+
+```sh
+yarn add axios
+
+# or
+
+npm install axios
+```
+
+Next, in __amplify/backend/function/<FUNCTION_NAME>/src/app.js__, let's add a new endpoint that will fetch a list of people from the [Star Wars API](https://swapi.co/).
+
+```js
+// require axios
+var axios = require('axios')
+
+// add new /people endpoint
+app.get('/people', function(req, res) {
+  axios.get('https://swapi.co/api/people/')
+    .then(response => {
+      res.json({
+        people: response.data.results,
+        success: 'get call succeed!',
+        url: req.url
+      });
+    })
+    .catch(err => {
+      res.json({
+        error: 'error fetching data'
+      });
+    })
+});
+```
+
+Now we can add a new function called getPeople that will call this API:
+
+```js
+getPeople = async() => {
+  try {
+    const data = await API.get('amplifyrestlamdbaapi', '/people')
+    this.setState({ people: data.people })
+  } catch (err) {
+    console.log('error fetching data..', err)
+  }
+}
+```
+
 ## Working with Storage
 
 To add storage, we can use the following command:
@@ -701,3 +755,19 @@ recordEvent = () => {
 
 <button onClick={this.recordEvent}>Record Event</button>
 ```
+
+## Removing Services
+
+If at any time, or at the end of this workshop, you would like to delete a service from your project & your account, you can do this by running the `amplify remove` command:
+
+```sh
+amplify remove auth
+```
+
+If you are unsure of what services you have enabled at any time, you can run the `amplify status` command:
+
+```sh
+amplify status
+```
+
+`amplify status` will give you the list of resources that are currently enabled in your app.

@@ -381,7 +381,7 @@ const ListPets = `
 
 // define some state to hold the data returned from the API
 state = {
-  name: '', description: '', pets: []
+  pets: []
 }
 
 // execute the query in componentDidMount
@@ -397,7 +397,7 @@ async componentDidMount() {
   }
 }
 
-// render the data in our UI
+// add UI in render method to show data
   {
     this.state.pets.map((pet, index) => (
       <div key={index}>
@@ -420,7 +420,7 @@ Let's look at how we can do this in our React application:
 // import graphqlOperation & API from AWS Amplify
 import { graphqlOperation, API } from 'aws-amplify'
 
-// define the mutation
+// define the new mutation
 const CreatePet = `
   mutation($name: String!, $description: String) {
     createPet(input: {
@@ -435,9 +435,21 @@ const CreatePet = `
 
 // create initial state
 state = {
-  name: '', description: ''
+  name: '', description: '', pets: []
 }
-// execute mutation
+
+async componentDidMount() {
+  try {
+    const pets = await API.graphql(graphqlOperation(ListPets))
+    console.log('pets:', pets)
+    this.setState({
+      pets: pets.data.listPets.items
+    })
+  } catch (err) {
+    console.log('error fetching pets...', err)
+  }
+}  
+
 createPet = async() => {
   const { name, description } = this.state
   if (name === '') return
@@ -445,6 +457,8 @@ createPet = async() => {
   if (description !== '') {
     pet = { ...pet, description }
   }
+  const updatedPetArray = [...this.state.pets, pet]
+  this.setState({ pets: updatedPetArray })
   try {
     await API.graphql(graphqlOperation(CreatePet, pet))
     console.log('item created!')
@@ -452,6 +466,7 @@ createPet = async() => {
     console.log('error creating pet...', err)
   }
 }
+
 // change state then user types into input
 onChange = (event) => {
   this.setState({

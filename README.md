@@ -129,7 +129,7 @@ Now, our app is ready to start using our AWS services.
 
 ### Using the withAuthenticator component
 
-To add authentication, we'll go into our App.js file file and first import the `withAuthenticator` HOC (Higher Order Component) from `aws-amplify-react`:
+To add authentication, we'll go into __src/App.js__ and first import the `withAuthenticator` HOC (Higher Order Component) from `aws-amplify-react`:
 
 ```js
 import { withAuthenticator } from 'aws-amplify-react'

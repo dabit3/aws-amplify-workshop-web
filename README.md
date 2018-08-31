@@ -256,15 +256,16 @@ amplify add api
 > Answer the following questions
 
 - Please select from one of the above mentioned services __REST__   
-- Please provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapi__   
-- Please provide a path, e.g. /items __/pets__   
-- Please select lambda source __Create a new Lambda function__   
-- Please provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapilambda__   
-- Please provide the Lambda function name: __amplifyrestapilambda__   
+- Provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapi__   
+- Provide a path, e.g. /items __/pets__   
+- Choose lambda source __Create a new Lambda function__   
+- Provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapilambda__   
+- Provide the Lambda function name: __amplifyrestapilambda__   
 - Please select the function template you want to use: __Serverless express function (Integration with Amazon API Gateway)__   
+- Restrict API access __N__
 - Do you want to edit the local lambda function now? __Y__   
 
-> Update `app.get('/pets') with the following:
+> Update the existing `app.get('/pets') route with the following:
 ```js
 app.get('/pets', function(req, res) {
   // Add your code here

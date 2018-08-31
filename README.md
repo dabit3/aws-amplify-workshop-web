@@ -535,6 +535,11 @@ amplify add storage
 - Who should have access: __Auth users only__
 - What kind of access do you want for Authenticated users __read/write__   
 
+
+```sh
+amplify push
+```
+
 Now, storage is configured & ready to use.
 
 What we've done above is created configured an Amazon S3 bucket that we can now start using for storing items.

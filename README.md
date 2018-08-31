@@ -109,6 +109,8 @@ Now, we'll run the push command and the cloud resources will be created in our A
 amplify push
 ```
 
+> To view the new Cognito authentication service at any time after its creation, go to the dashboard at [https://console.aws.amazon.com/cognito/](https://console.aws.amazon.com/cognito/). Also be sure that your region is set correctly.
+
 ### Configuring the React applicaion
 
 Now, our resources are created & we can start using them!
@@ -231,6 +233,8 @@ type Pet @model {
 ```bash
 amplify push
 ```
+
+> To view the new AWS AppSync API at any time after its creation, go to the dashboard at [https://console.aws.amazon.com/appsync](https://console.aws.amazon.com/appsync). Also be sure that your region is set correctly.
 
 ### Interacting with the GraphQL API - Querying for data
 

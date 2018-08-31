@@ -109,7 +109,7 @@ Now, we'll run the push command and the cloud resources will be created in our A
 amplify push
 ```
 
-#### Configuring the React applicaion
+### Configuring the React applicaion
 
 Now, our resources are created & we can start using them!
 
@@ -125,7 +125,7 @@ Amplify.configure(config)
 
 Now, our app is ready to start using our AWS services.
 
-#### Using the withAuthenticator component
+### Using the withAuthenticator component
 
 To add authentication, we'll go into our App.js file file and first import the `withAuthenticator` HOC (Higher Order Component) from `aws-amplify-react`:
 
@@ -141,7 +141,18 @@ export default withAuthenticator(App)
 
 Now, we can run the app and see that an Authentication flow has been added in front of our App component. This flow gives users the ability to sign up & sign in.
 
-#### Custom authentication strategies
+### Accessing User Data
+
+We can access the user's info now that they are signed in by calling `Auth.currentAuthenticatedUser()`.
+
+```js
+import { Auth } from 'aws-amplify'
+
+const user = await Auth.currentAuthenticatedUser()
+console.log('username:', user.username)
+```
+
+### Custom authentication strategies
 
 The `withAuthenticator` component is a really easy way to get up and running with authentication, but in a real-world application we probably want more control over how our form looks & functions.
 

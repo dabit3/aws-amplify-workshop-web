@@ -152,8 +152,10 @@ We can access the user's info now that they are signed in by calling `Auth.curre
 ```js
 import { Auth } from 'aws-amplify'
 
-const user = await Auth.currentAuthenticatedUser()
-console.log('username:', user.username)
+async componentDidMount() {
+  const user = await Auth.currentAuthenticatedUser()
+  console.log('username:', user.username)
+}
 ```
 
 ### Custom authentication strategies

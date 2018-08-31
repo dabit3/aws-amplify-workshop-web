@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { withAuthenticator } from 'aws-amplify-react'
+import { Auth } from 'aws-amplify'
 class App extends Component {
+  async componentDidMount() {
+    const user = await Auth.currentAuthenticatedUser()
+    console.log('username:', user.username)
+  }
   render() {
     return (
       <div className="App">
@@ -18,4 +24,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default withAuthenticator(App)

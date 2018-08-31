@@ -570,32 +570,32 @@ addToStorage = () => {
 
 This would create a folder called `javascript` in our S3 bucket & store a file called __MyReactComponent.js__ there with the code we specified in the second argument of `Storage.put`.
 
-If we wanted to read everything from this folder, we could use this function:
+If we want to read everything from this folder, we can use `Storage.list`:
 
 ```js
 readFromStorage = () => {
-  Storage.get('javascript/')
+  Storage.list('javascript/')
     .then(data => console.log('data from S3: ', data))
     .catch(err => console.log('error'))
 }
 ```
 
-If we only wanted to read the single file, we could use this function:
+If we only want to read the single file, we can use `Storage.get`:
 
 ```js
 readFromStorage = () => {
   Storage.get('javascript/MyReactComponent.js')
-    .then(data => console.log('data from S3: ', data)
+    .then(data => console.log('data from S3: ', data))
     .catch(err => console.log('error'))
 }
 ```
 
-If we wanted to pull down everything, we could use this function:
+If we wanted to pull down everything, we can use `Storage.list`:
 
 ```js
 readFromStorage = () => {
-  Storage.get('')
-    .then(data => console.log('data from S3: ', data)
+  Storage.list('')
+    .then(data => console.log('data from S3: ', data))
     .catch(err => console.log('error'))
 }
 ```

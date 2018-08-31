@@ -240,7 +240,56 @@ amplify push
 
 > To view the new AWS AppSync API at any time after its creation, go to the dashboard at [https://console.aws.amazon.com/appsync](https://console.aws.amazon.com/appsync). Also be sure that your region is set correctly.
 
-### Interacting with the GraphQL API - Querying for data
+### Adding mutations from within the AWS AppSync Console
+
+In the AWS AppSync console, open your API & then click on Queries.
+
+Execute the following mutation to create a new pet in the API:
+
+```graphql
+mutation createPet {
+  createPet(input: {
+    name: "Zeus"
+    description: "Best dog in the western hemisphere"
+  }) {
+    id
+  }
+}
+```
+
+Now, let's query for the pet:
+
+```graphql
+query listPets {
+  listPets {
+    items {
+      id
+      name
+      description
+    }
+  }
+}
+```
+
+We can even add search / filter capabilities when querying:
+
+```graphql
+query listPets {
+  listPets(filter: {
+    description: {
+      contains: "dog"
+    }
+  }) {
+    items {
+      id
+      name
+      description
+    }
+  }
+}
+```
+
+### Interacting with the GraphQL API from our client application - Querying for data
 
 Now that the GraphQL API is created we can begin interacting with it!
 

@@ -443,8 +443,14 @@ API.graphql(
     next: (eventData) => {
       console.log('eventData', eventData)
       const pet = eventData.value.data.onCreatePet
-      const pets = [...this.state.pets, pet]
-      pets.filter(item => item.id !== pet.id)
+      const pets = [
+        ...this.state.pets.filter(p => {
+          const val1 = p.name + p.description
+          const val2 = pet.name + pet.description
+          return val1 !== val2
+        }),
+        pet
+      ]
       this.setState({ pets })
     }
 });

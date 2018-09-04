@@ -473,7 +473,6 @@ amplify add api
 - Provide a friendly name for your resource that will be used to label this category in the project: __amplifyrestapilambda__   
 - Provide the Lambda function name: __amplifyrestapilambda__   
 - Please select the function template you want to use: __Serverless express function (Integration with Amazon API Gateway)__   
-- Restrict API access __N__
 - Do you want to edit the local lambda function now? __Y__   
 
 > Update the existing `app.get('/pets') route with the following:
@@ -492,9 +491,10 @@ app.get('/pets', function(req, res) {
 });
 ```
 
-? Do you want to add another path? (y/N) __N__   
-? Which kind of privacy your API should have? __Authenticated and Guest users (AWS_IAM with Cognito Identity)__   
-? overwrite YOURFILEPATH-cloudformation-template.yml __Y__  
+- Restrict API access __Y__
+- Who should have access? Authenticated users only
+- What kind of access do you want for Authenticated users read/write
+- Do you want to add another path? (y/N) __N__     
 
 > Now the resources have been created & configured & we can push them to our account: 
 

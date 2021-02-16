@@ -26,26 +26,18 @@ In this workshop we'll learn how to build cloud-enabled web applications with Re
 
 To get started, we first need to create a new React project & change into the new directory using the [Create React App CLI](https://github.com/facebook/create-react-app).
 
-If you already have this installed, skip to the next step. If not, either install the CLI & create the app or create a new app using npx:
 
 ```bash
-npm install -g create-react-app
-create-react-app my-amplify-app
-```
-
-Or use npx (npm 5.2 & later) to create a new app:
-
-```bash
-npx create-react-app my-amplify-app
+npx create-react-app full-stack-aws
 ```
 
 Now change into the new app directory & install the AWS Amplify & AWS Amplify React libraries:
 
 ```bash
-cd my-amplify-app
-npm install --save aws-amplify aws-amplify-react
+cd full-stack-aws
+npm install --save aws-amplify @aws-amplify/ui-react
 # or
-yarn add aws-amplify aws-amplify-react
+yarn add aws-amplify @aws-amplify/ui-react
 ```
 
 ## Installing the CLI & Initializing a new AWS Amplify Project
@@ -58,41 +50,53 @@ Next, we'll install the AWS Amplify CLI:
 npm install -g @aws-amplify/cli
 ```
 
-Now we need to configure the CLI with our credentials:
-
-```js
-amplify configure
-```
+Now we need to configure the CLI with our credentials.
 
 > If you'd like to see a video walkthrough of this configuration process, click [here](https://www.youtube.com/watch?v=fWbM5DLh25U).
 
-Here we'll walk through the `amplify configure` setup. Once you've signed in to the AWS console, continue:
-- Specify the AWS Region: __us-east-1__
-- Specify the username of the new IAM user: __amplify-workshop-user__
-> In the AWS Console, click __Next: Permissions__, __Next: Review__, & __Create User__ to create the new IAM user. Then, return to the command line & press Enter.
+```js
+amplify configure
+
+- Specify the AWS Region: us-east-1 || us-west-2 || eu-central-1
+- Specify the username of the new IAM user: amplify-workshop-user
+> In the AWS Console, click Next: Permissions, Next: Tags, Next: Review, & Create User to create the new IAM user. Then return to the command line & press Enter.
 - Enter the access key of the newly created user:   
-  accessKeyId: __(<YOUR_ACCESS_KEY_ID>)__   
-  secretAccessKey:  __(<YOUR_SECRET_ACCESS_KEY>)__
-- Profile Name: __(default)__
+? accessKeyId: (<YOUR_ACCESS_KEY_ID>)  
+? secretAccessKey: (<YOUR_SECRET_ACCESS_KEY>)
+- Profile Name: amplify-workshop-user
+```
 
 ### Initializing A New Project
 
 ```bash
 amplify init
+
+- Enter a name for the project: full-stack-aws
+- Enter a name for the environment: dev
+- Choose your default editor: Visual Studio Code (or your default editor)
+- Please choose the type of app that youre building: javascript
+- What javascript framework are you using: react
+- Source Directory Path: . (this sets the base directory to the root directory)
+- Distribution Directory Path: .next
+- Build Command: npm run-script build
+- Start Command: npm run-script start
+- Do you want to use an AWS profile? Y
+- Please choose the profile you want to use: amplify-cli-user (or your preferred profile)
 ```
 
-- Choose your default editor: __Visual Studio Code (or your default editor)__   
-- Please choose the type of app that you're building __javascript__   
-- What javascript framework are you using __react__   
-- Source Directory Path: __src__   
-- Distribution Directory Path: __build__   
-- Build Command: __npm run-script build__   
-- Start Command: __npm run-script start__   
-- Do you want to use an AWS profile? __Y__
-- Please choose the profile you want to use: __default__
+The Amplify CLI has initialized a new project & you will see a new folder: __amplify__ & a new file called __aws-exports.js__ in the root directory. These files hold your project configuration.
 
-Now, the AWS Amplify CLI has iniatilized a new project & you will see a couple of new files & folders: __amplify__ & __.amplifyrc__. These files hold your project configuration.
+To view the sus of the amplify project at any time, you can run the Amplify `status` command:
 
+```sh
+$ amplify status
+```
+
+To view the amplify project in the Amplify console at any time, run the `console` command:
+
+```sh
+$ amplify console
+```
 
 ## Adding Authentication
 
@@ -133,7 +137,7 @@ Now, our app is ready to start using our AWS services.
 To add authentication, we'll go into __src/App.js__ and first import the `withAuthenticator` HOC (Higher Order Component) from `aws-amplify-react`:
 
 ```js
-import { withAuthenticator } from 'aws-amplify-react'
+import { withAuthenticator } from '@aws-amplify/ui-react'
 ```
 
 Next, we'll wrap our default export (the App component) with the `withAuthenticator` HOC:

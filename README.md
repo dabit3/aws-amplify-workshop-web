@@ -54,7 +54,7 @@ Now we need to configure the CLI with our credentials.
 
 > If you'd like to see a video walkthrough of this configuration process, click [here](https://www.youtube.com/watch?v=fWbM5DLh25U).
 
-```js
+```bash
 amplify configure
 
 - Specify the AWS Region: us-east-1 || us-west-2 || eu-central-1
@@ -81,7 +81,7 @@ amplify init
 - Build Command: npm run-script build
 - Start Command: npm run-script start
 - Do you want to use an AWS profile? Y
-- Please choose the profile you want to use: amplify-cli-user (or your preferred profile)
+- Please choose the profile you want to use: amplify-workshop-user (or your preferred profile)
 ```
 
 The Amplify CLI has initialized a new project & you will see a new folder: __amplify__ & a new file called __aws-exports.js__ in the root directory. These files hold your project configuration.
@@ -103,10 +103,14 @@ $ amplify console
 To add authentication, we can use the following command:
 
 ```sh
-amplify add auth
-```
+$ amplify add auth
 
-> When prompted for __Do you want to use default authentication and security configuration?__, choose __Yes__
+$ amplify add auth
+
+? Do you want to use default authentication and security configuration? Default configuration 
+? How do you want users to be able to sign in when using your Cognito User Pool? Username
+? Do you want to configure advanced settings? No, I am done. 
+```
 
 Now, we'll run the push command and the cloud resources will be created in our AWS account.
 

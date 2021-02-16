@@ -35,8 +35,11 @@ Now change into the new app directory & install the AWS Amplify & AWS Amplify Re
 
 ```bash
 cd full-stack-aws
+
 npm install --save aws-amplify @aws-amplify/ui-react
+
 # or
+
 yarn add aws-amplify @aws-amplify/ui-react
 ```
 
@@ -71,7 +74,7 @@ amplify configure
 ```bash
 amplify init
 
-- Enter a name for the project: full-stack-aws
+- Enter a name for the project: fullstackaws
 - Enter a name for the environment: dev
 - Choose your default editor: Visual Studio Code (or your default editor)
 - Please choose the type of app that youre building: javascript

@@ -114,7 +114,11 @@ Now, we'll run the push command and the cloud resources will be created in our A
 amplify push
 ```
 
-> To view the new Cognito authentication service at any time after its creation, go to the dashboard at [https://console.aws.amazon.com/cognito/](https://console.aws.amazon.com/cognito/). Also be sure that your region is set correctly.
+To view the new Cognito authentication service at any time after its creation, you can visit the Amplify Console or run the following command:
+
+```sh
+amplify console auth
+```
 
 ### Configuring the React applicaion
 
@@ -134,7 +138,7 @@ Now, our app is ready to start using our AWS services.
 
 ### Using the withAuthenticator component
 
-To add authentication, we'll go into __src/App.js__ and first import the `withAuthenticator` HOC (Higher Order Component) from `aws-amplify-react`:
+To add authentication, we'll go into __src/App.js__ and first import the `withAuthenticator` HOC (Higher Order Component) from `@aws-amplify/ui-react`:
 
 ```js
 import { withAuthenticator } from '@aws-amplify/ui-react'
@@ -148,19 +152,49 @@ export default withAuthenticator(App)
 
 Now, we can run the app and see that an Authentication flow has been added in front of our App component. This flow gives users the ability to sign up & sign in.
 
-> To view the new user that was created in Cognito, go back to the dashboard at [https://console.aws.amazon.com/cognito/](https://console.aws.amazon.com/cognito/). Also be sure that your region is set correctly.
+> To view users that have been created in Cognito at any time, visit the Cognito dashboard.
+
+Next, you can add easily a Sign Out button at any time by using the `AmplifySignOut` component:
+
+```javascript
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+
+// usage
+<AmplifySignOut />
+```
 
 ### Accessing User Data
 
 We can access the user's info now that they are signed in by calling `Auth.currentAuthenticatedUser()`.
 
-```js
-import { Auth } from 'aws-amplify'
+Let's update the component to show the user their profile information:
 
-async componentDidMount() {
-  const user = await Auth.currentAuthenticatedUser()
-  console.log('username:', user.username)
+```js
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+import { Auth } from 'aws-amplify'
+import { useState, useEffect } from 'react'
+
+function App() {
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    checkUser()
+  }, [])
+  async function checkUser() {
+    const user = await Auth.currentAuthenticatedUser()
+    setUser(user)
+  }
+  if (!user) return null
+  return (
+    <div>
+      <h1 className="text-3xl font-semibold tracking-wide mt-6">Profile</h1>
+      <h3 className="font-medium text-gray-500 my-2">Username: {user.username}</h3>
+      <p className="text-sm text-gray-500 mb-6">Email: {user.attributes.email}</p>
+      <AmplifySignOut />
+    </div>
+  )
 }
+
+export default withAuthenticator(App)
 ```
 
 ### Custom authentication strategies

@@ -154,7 +154,7 @@ export default withAuthenticator(App)
 
 Now, we can run the app and see that an Authentication flow has been added in front of our App component. This flow gives users the ability to sign up & sign in.
 
-> To view users that have been created in Cognito at any time, visit the Cognito dashboard.
+> To view users that have been created in Cognito at any time, visit the Cognito dashboard by running `amplify console auth`.
 
 Next, you can add easily a Sign Out button at any time by using the `AmplifySignOut` component:
 

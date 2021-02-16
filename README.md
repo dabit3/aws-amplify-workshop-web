@@ -79,8 +79,8 @@ amplify init
 - Choose your default editor: Visual Studio Code (or your default editor)
 - Please choose the type of app that youre building: javascript
 - What javascript framework are you using: react
-- Source Directory Path: . (this sets the base directory to the root directory)
-- Distribution Directory Path: .next
+- Source Directory Path: src (this sets the base directory to the root directory)
+- Distribution Directory Path: build
 - Build Command: npm run-script build
 - Start Command: npm run-script start
 - Do you want to use an AWS profile? Y

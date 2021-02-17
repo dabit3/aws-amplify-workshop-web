@@ -113,7 +113,7 @@ $ amplify add auth
 ? Do you want to configure advanced settings? No, I am done. 
 ```
 
-Now, we'll run the push command and the cloud resources will be created in our AWS account.
+Now, we'll run the `push` command and the cloud resources will be created in our AWS account.
 
 ```bash
 amplify push
@@ -214,32 +214,30 @@ To do this, we could create some initial state for these values & create an even
 
 ```js
 // initial state
-state = {
-  username: '', password: '', email: '', phone_number: ''
-}
+const [formState, setFormState] = useState({ username: '', password: '', email: '', phone_number: '' })
 
 // event handler
-onChange = (event) => {
-  this.setState({ [event.target.name]: event.target.value })
+function onChange(event) {
+  setFormState({ ...formState, [event.target.name]: event.target.value })
 }
 
 // example of usage with input
 <input
   name='username'
   placeholder='username'
-  onChange={this.onChange}
+  onChange={onChange}
 />
 ```
 
-We'd also need to have a method that signed up & signed in users. We can us the Auth class to do thi. The Auth class has over 30 methods including things like `signUp`, `signIn`, `confirmSignUp`, `confirmSignIn`, & `forgotPassword`. Thes functions return a promise so they need to be handled asynchronously.
+We'd also need to have a method that signs up & signs in users. We can us the Auth class to do this. The Auth class has over 30 methods including things like `signUp`, `signIn`, `confirmSignUp`, `confirmSignIn`, & `forgotPassword`. This function return a promise so they need to be handled asynchronously.
 
 ```js
 // import the Auth component
 import { Auth } from 'aws-amplify'
 
 // Class method to sign up a user
-signUp = async() => {
-  const { username, password, email, phone_number } = this.state
+async function signUp() {
+  const { username, password, email, phone_number } = formState
   try {
     await Auth.signUp({ username, password, attributes: { email, phone_number }})
   } catch (err) {
@@ -254,19 +252,19 @@ To add a GraphQL API, we can use the following command:
 
 ```sh
 amplify add api
+
+? Please select from one of the above mentioned services GraphQL
+? Provide API name: fullstackaws
+? Choose an authorization type for the API: API key
+? Enter a description for the API key: public
+? After how many days from now the API key should expire (1-365): 365
+? Do you want to configure advanced settings for the GraphQL API: No
+? Do you have an annotated GraphQL schema? N
+? Choose a schema template: Single object with fields
+? Do you want to edit the schema now? (Y/n) Y
 ```
 
-Answer the following questions
-
-- Please select from one of the above mentioned services __GraphQL__   
-- Provide API name: __AmplifyWorkshopTest__   
-- Choose an authorization type for the API __API key__   
-- Do you have an annotated GraphQL schema? __N__   
-- Do you want a guided schema creation? __Y__   
-- What best describes your project: __Single object with fields (e.g. “Todo” with ID, name, description)__   
-- Do you want to edit the schema now? (Y/n) __Y__   
-
-> When prompted, update the schema to the following:   
+When prompted, update the schema (located at __full-stack-aws/amplify/backend/api/fullstackaws/schema.graphql__) to the following:
 
 ```graphql
 type Pet @model {
@@ -276,17 +274,32 @@ type Pet @model {
 }
 ```
 
-> Next, let's push the configuration to our account:
+Next, let's push the configuration to our account:
 
 ```bash
 amplify push
+
+? Are you sure you want to continue: Y
+? Do you want to generate code for your newly created GraphQL API: Y
+? Choose the code generation language target: JavaScript
+? Enter the file name pattern of graphql queries, mutations and subscriptions: src/graphql/**/*.js
+? Do you want to generate/update all possible GraphQL operations: Y
+? Enter maximum statement depth: 2
 ```
 
-> To view the new AWS AppSync API at any time after its creation, go to the dashboard at [https://console.aws.amazon.com/appsync](https://console.aws.amazon.com/appsync). Also be sure that your region is set correctly.
+> To view the new AWS AppSync API at any time after its creation, run `amplify console api` from the command line.
 
 ### Adding mutations from within the AWS AppSync Console
 
-In the AWS AppSync console, open your API & then click on Queries.
+Next, open the AWS AppSync console:
+
+```sh
+amplify console api
+
+> Choose GraphQL
+```
+
+Next, click on __Queries__ in the left hand menu.
 
 Execute the following mutation to create a new pet in the API:
 
@@ -341,51 +354,54 @@ The first thing we'll do is perform a query to fetch data from our API.
 
 To do so, we need to define the query, execute the query, store the data in our state, then list the items in our UI.
 
-
 ```js
-// imports from Amplify library
-import { API, graphqlOperation } from 'aws-amplify'
+// import the useState and useEffect hooks from React
+import { useState, useEffect } from 'react'
 
-// define query
-const ListPets = `
-  query {
-    listPets {
-      items {
-        id
-        name
-        description
+// import the API category from Amplify library
+import { API } from 'aws-amplify'
+
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+
+// import the GraphQL query (created by the CLI)
+import { listPets } from './graphql/queries'
+
+function App() {
+  // define some state to hold the data returned from the API
+  const [pets, setPets] = useState([])
+
+  useEffect(() => {
+    // create and invoke a function to fetch the data from the API
+    fetchPets()
+    async function fetchPets() {
+      try {
+        const pets = await API.graphql({
+          query: listPets
+        })
+        console.log('pets:', pets)
+        setPets(pets.data.listPets.items)
+      } catch (err) {
+        console.log('error fetching pets...', err)
       }
     }
-  }
-`
-
-// define some state to hold the data returned from the API
-state = {
-  pets: []
+  }, [])
+  return (
+    <div className="App">
+      <h1>My Pet App</h1>
+      {
+        pets.map((pet, index) => (
+          <div key={index}>
+            <h3>{pet.name}</h3>
+            <p>{pet.description}</p>
+          </div>
+        ))
+      }
+      <AmplifySignOut />
+    </div>
+  );
 }
 
-// execute the query in componentDidMount
-async componentDidMount() {
-  try {
-    const pets = await API.graphql(graphqlOperation(ListPets))
-    console.log('pets:', pets)
-    this.setState({
-      pets: pets.data.listPets.items
-    })
-  } catch (err) {
-    console.log('error fetching pets...', err)
-  }
-}
-
-// add UI in render method to show data
-  {
-    this.state.pets.map((pet, index) => (
-      <div key={index}>
-        <h3>{pet.name}</h3>
-        <p>{pet.description}</p>
-      </div>
-    ))
-  }
+export default withAuthenticator(App)
 ```
 
 ## Performing mutations
@@ -393,74 +409,93 @@ async componentDidMount() {
  Now, let's look at how we can create mutations.
 
 ```js
-import { graphqlOperation, API } from 'aws-amplify'
 
-// define the new mutation
-const CreatePet = `
-  mutation($name: String!, $description: String) {
-    createPet(input: {
-      name: $name, description: $description
-    }) {
-      id
-      name
-      description
+import { useState, useEffect } from 'react'
+import { API } from 'aws-amplify'
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+import { listPets } from './graphql/queries'
+
+// import GraphQL mutation
+import { createPet } from './graphql/mutations'
+
+function App() {
+  const [pets, setPets] = useState([])
+
+  // create form state
+  const [formState, setFormState] = useState({ name: '', description: '' })
+
+  useEffect(() => {
+    // create and invoke a function to fetch the data from the API
+    fetchPets()
+    async function fetchPets() {
+      try {
+        const pets = await API.graphql({
+          query: listPets
+        })
+        console.log('pets:', pets)
+        setPets(pets.data.listPets.items)
+      } catch (err) {
+        console.log('error fetching pets...', err)
+      }
+    }
+  }, [])
+
+  // change form state then user types into input
+  function onChange(event) {
+    setFormState({
+      ...formState, [event.target.name]: event.target.value
+    })
+  }
+
+  // create a function that updates the API as well as the form state
+  async function createPetMutation() {
+    const { name, description } = formState
+    if (name === '') return
+    let pet = { name }
+    if (description !== '') {
+      pet = { ...pet, description }
+    }
+    const updatedPetArray = [...pets, pet]
+    setPets(updatedPetArray)
+    try {
+      await API.graphql({
+        query: createPet,
+        variables: { input: pet }
+      })
+      console.log('item created!')
+    } catch (err) {
+      console.log('error creating pet...', err)
     }
   }
-`
 
-// create initial state
-state = {
-  name: '', description: '', pets: []
+  return (
+    <div className="App">
+      <h1>My Pet App</h1>
+      <input
+        name='name'
+        onChange={onChange}
+        value={formState.name}
+      />
+      <input
+        name='description'
+        onChange={onChange}
+        value={formState.description}
+      />
+      <button onClick={createPetMutation}>Create Pet</button>
+      {
+        pets.map((pet, index) => (
+          <div key={index}>
+            <h3>{pet.name}</h3>
+            <p>{pet.description}</p>
+          </div>
+        ))
+      }
+      <AmplifySignOut />
+    </div>
+  );
 }
 
-async componentDidMount() {
-  try {
-    const pets = await API.graphql(graphqlOperation(ListPets))
-    console.log('pets:', pets)
-    this.setState({
-      pets: pets.data.listPets.items
-    })
-  } catch (err) {
-    console.log('error fetching pets...', err)
-  }
-}  
-
-createPet = async() => {
-  const { name, description } = this.state
-  if (name === '') return
-  let pet = { name }
-  if (description !== '') {
-    pet = { ...pet, description }
-  }
-  const updatedPetArray = [...this.state.pets, pet]
-  this.setState({ pets: updatedPetArray })
-  try {
-    await API.graphql(graphqlOperation(CreatePet, pet))
-    console.log('item created!')
-  } catch (err) {
-    console.log('error creating pet...', err)
-  }
-}
-
-// change state then user types into input
-onChange = (event) => {
-  this.setState({
-    [event.target.name]: event.target.value
-  })
-}
-
-// add UI with event handlers to manage user input
-<input
-  name='name'
-  onChange={this.onChange}
-  value={this.state.name}
-/>
-<input
-  name='description'
-  onChange={this.onChange}
-  value={this.state.description}
-/>
-<button onClick={this.createPet}>Create Pet</button>
+export default withAuthenticator(App)
 ```
 
 ### GraphQL Subscriptions
